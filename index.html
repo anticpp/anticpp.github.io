@@ -239,6 +239,162 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://anticpp.github.io/2018/04/17/dht/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="supergui@live.cn">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="supergui">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="supergui" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/04/17/dht/" itemprop="url">
+                  DHT
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T21:03:24+08:00">
+                2018-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>222BT作为历史上最成功的P2P文件系统，已经在全球实现了彻底的去中心化。BT的P2P网络，不依赖任何机构或者中心依然能够很好的运行。<br>这里面，最关键的设计是引入了DHT。这里我们主要介绍一下为什么要引入DHT，以及DHT的基本原理。</p>
+<p>BT作为一种P2P系统，面临<strong><em>资源索引</em></strong>问题，简单来说<strong><em>资源索引</em></strong>维护资源(resource)当前有哪些节点(peer)也在同时下载的关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">res0 -&gt; peerA,peerB,...</span><br><span class="line">res1 -&gt; peerC,peerD,...</span><br><span class="line"></span><br><span class="line">                         ------------------------------</span><br><span class="line">              Index ---&gt; | res0 | res1 | ...          |</span><br><span class="line">                         ------------------------------</span><br><span class="line">                            |      |</span><br><span class="line">                           \|/    \|/</span><br><span class="line">                         ------- -------</span><br><span class="line">                         |peerA| |peerC|</span><br><span class="line">                         ------- -------</span><br><span class="line">                            |      |</span><br><span class="line">                         ------- -------</span><br><span class="line">                         |peerB| |peerD|</span><br><span class="line">                         ------- -------</span><br></pre></td></tr></table></figure>
+<h2 id="2-中心化"><a href="#2-中心化" class="headerlink" title="2. 中心化"></a>2. 中心化</h2><p>实际上BT下载的传输本身是去中心化的，我们每一个peer会同时从网络上搜索到的其它peer进行数据传输。<br>但是<strong><em>资源索引</em></strong>一开始还是属于中心化的解决方案，就是Tracker。虽然网络上有很多提供Tracker的服务，每一个客户端也可以设置若干个Tracker，但是Tracker依然是一个中心化的服务。</p>
+<p>Tracker提供了上报和查询服务，如下图：正在下载某一个资源(res)的BT客户端peer2把资源上报给Tracker。下载资源的BT客户端(peer1)可以到Tracker查询时下载这个资源的peer2。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">           --------------    -----------------------------------</span><br><span class="line">      |---&gt;| Tracker    | -- |           Index                 |</span><br><span class="line">      |    --------------    -----------------------------------</span><br><span class="line">      |     |         /|\   </span><br><span class="line">      |     |          |</span><br><span class="line">      |     |          |</span><br><span class="line">query |     |resp      |</span><br><span class="line">      |     |(peer2)   |</span><br><span class="line">      |     |          |    report res</span><br><span class="line">      |     |          |----------------</span><br><span class="line">      |    \|/                         |</span><br><span class="line">   -----------                     ---------</span><br><span class="line">   |  peer1  |                     | peer2 |</span><br><span class="line">   -----------                     ---------</span><br></pre></td></tr></table></figure>
+<p>Tracker提供了一种简单高效的方案，解决了资源索引的问题。缺点是一旦Tracker不可用，BT的P2P网络也就随之瘫痪(我们可以参考海盗湾事件)。这是所有中心化服务必将面临的问题，为了让整个P2P网络更加健壮，需要探索一个去中心化的实现。</p>
+<h2 id="3-去中心化"><a href="#3-去中心化" class="headerlink" title="3. 去中心化"></a>3. 去中心化</h2><p>考虑没有中心化的Tracker，我们需要一个去中心化的方式，把资源的索引存储到全网的节点，并且能高效的查询。</p>
+<h3 id="3-1-全量"><a href="#3-1-全量" class="headerlink" title="3.1 全量"></a>3.1 全量</h3><p>最简单的办法，就是让每一个Node(节点)都维护一个全量的索引，相当于每个Node都是一个Tracker节点。</p>
+<blockquote>
+<p>注意：我们需要区分一下Node和Peer的概念，以下是DHT的papper的描述<br>A “peer” is a client/server listening on a TCP port that implements the BitTorrent protocol. A “node” is a client/server listening on a UDP port implementing the distributed hash table protocol. </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">--------------    -----------------------------------</span><br><span class="line">| Node0      | -- |           Index                 |</span><br><span class="line">--------------    -----------------------------------</span><br><span class="line"></span><br><span class="line">--------------    -----------------------------------</span><br><span class="line">| Node1      | -- |           Index                 |</span><br><span class="line">--------------    -----------------------------------</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">--------------    -----------------------------------</span><br><span class="line">| NodeN      | -- |           Index                 |</span><br><span class="line">--------------    -----------------------------------</span><br></pre></td></tr></table></figure>
+<p>这种方案有几个明显的问题</p>
+<ol>
+<li>每个索引的变更需要扩散到全网，效率太差</li>
+<li>海量的索引，每个单点都需要全量存储，代价太大</li>
+</ol>
+<h3 id="3-2-Sharding"><a href="#3-2-Sharding" class="headerlink" title="3.2 Sharding"></a>3.2 Sharding</h3><p>基本的思路是，我们需要把索引数据按照<strong><em>一定规则</em></strong>分布(sharding)到全网的节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    -----------       -----------     -----------                   -----------</span><br><span class="line">    |  Node0  |       |  Node1  |     |  Node2  |       ...         |  NodeN  |</span><br><span class="line">    -----------       -----------     -----------                   -----------</span><br><span class="line">       /|\                 /|\            /|\                            /|\</span><br><span class="line">        |--------           |              |                              |</span><br><span class="line">                 |          |              |                              |</span><br><span class="line">            -----------------------------------------------------------------------</span><br><span class="line">Index ----&gt; |  shard0    |  shard1    |   shard2     |  ...      |    shardN      |</span><br><span class="line">            -----------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>一致性Hash是一种常用的办法，首先把Node散列(hash<nodeid>)到一个整数的空间，这样每一个Node负责一个范围段的索引。<br>同样，我们可以把资源也计算一个整数的hash。<br>例如，NodeA负责范围<code>[i, j)</code>的范围，那么如果索引按照分布规则在范围内，那么该索引就由NodeA负责存储。</nodeid></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// NodeA covers [i, j).</span><br><span class="line">// Use hash(resource) to caculate resource.</span><br><span class="line">if i &lt; hash(resource) &lt; j &#123;</span><br><span class="line">    store(resource, NodeA) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里盗用一个网上的一致性Hash图片，具体的算法这里就不重复介绍了。</p>
+<p><img src="/images/dht-constant-hash.jpg" alt=""></p>
+<p>一致性Hash解决了sharding的问题，但是一致性Hash引入了Hash环状态。在系统中如何维护Hash状态数据，跟如何维护资源索引面临一样的问题。</p>
+<p>我们需要彻底解决状态数据的问题，才能真正实现去中心化。</p>
+<h2 id="4-DHT"><a href="#4-DHT" class="headerlink" title="4. DHT"></a>4. DHT</h2><p>DHT(Distributed Hash Table)，就是分布式Hash table。实际上也是Sharding的一种实现方法，DHT可以看作是一致性Hash的基础上的改进。</p>
+<p>一致性Hash算法的问题是Hash环的状态数据，只要我们能设计出一种关于索引分布规则的去中心化的<strong><em>共识机制</em></strong>，我们并不需要去维护一个Hash环。DHT本质上设计了这样一种去中心化的<strong><em>共识机制</em></strong>。</p>
+<p>关于DHT的比较完整的介绍，可以参考<a href="http://www.bittorrent.org/beps/bep_0005.html" target="_blank" rel="external">DHT Protocol</a>。</p>
+<h3 id="4-1-Hash"><a href="#4-1-Hash" class="headerlink" title="4.1 Hash"></a>4.1 Hash</h3><p>DHT网络中每个节点的NodeID就是一个hash值，每个资源也有一个hash。</p>
+<h3 id="4-2-距离"><a href="#4-2-距离" class="headerlink" title="4.2 距离"></a>4.2 距离</h3><p>用来计算2个hash的距离，Node和Node之间可以有距离，Node和资源之间也可以有距离。要注意的是，这个距离并不是实际意义上的距离，只是一个算法上的需要。</p>
+<h3 id="4-3-Routing-table"><a href="#4-3-Routing-table" class="headerlink" title="4.3 Routing table"></a>4.3 Routing table</h3><p>DHT网络中每个Node都维护一个Routing table（路由表），保存它和网络中一小部分节点信息。每一个节点，都能够提供查询接口，并且能够返回距离目标hash更近的新节点。这样，可以通过一个<strong><em>收敛的递归查询</em></strong>，不断的趋近目标。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">                   ---------------------------------------------</span><br><span class="line">Routing table --&gt;  | NodeInfo0 | NodeInfo1 | ...   | NodeInfoN |</span><br><span class="line">                   ---------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>这个过程实际上是一个Peer Routing的过程，<a href="https://github.com/libp2p/specs/blob/master/4-architecture.md#41-peer-routing" target="_blank" rel="external">IPFS peer routing</a>对这个概念有比较好的总结。</p>
+<p>一个典型的Query Resource过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1 ) client需要查找目标资源hash，先到Node0进行查询。</span><br><span class="line">2 ) 如果Node0本地有这个hash的索引，则返回结果</span><br><span class="line">3 ) 如果Node0本地没有这个hash的索引，Node0从自己的Routing table查找离目标hash更近的节点，例如Node1和Node2</span><br><span class="line">4 ) client对Node1和Node2重复过程1的查询，直到有查询到有结果</span><br><span class="line"></span><br><span class="line">           1) query hash       -----------</span><br><span class="line">client  --------------------&gt;  |         |</span><br><span class="line">        &lt;-------------------   |  Node0  |</span><br><span class="line">           2 ) Resource        |         |</span><br><span class="line">           3 ) Node1,Node2     -----------</span><br><span class="line"></span><br><span class="line">           4 ) query hash      -----------</span><br><span class="line">        --------------------&gt;  |  Node1  |</span><br><span class="line">                               -----------</span><br><span class="line"></span><br><span class="line">           4 ) query hash      -----------</span><br><span class="line">        --------------------&gt;  |  Node2  |</span><br><span class="line">                               -----------</span><br></pre></td></tr></table></figure></p>
+<h2 id="5-Kademlia"><a href="#5-Kademlia" class="headerlink" title="5. Kademlia"></a>5. Kademlia</h2><p>DHT有很多不同的实现，这里主要介绍Kademlia，一般我们叫KAD DHT。<br>KAD使用k-bucket(k桶)实现Routing table，能实现log2(N)的查询效率。假设1000000节点的规模的网络，可以最多20次查询能够完成全网节点的查询。</p>
+<h3 id="5-1-距离"><a href="#5-1-距离" class="headerlink" title="5.1 距离"></a>5.1 距离</h3><p>KAD使用XOR(按位异或)对两个hash进行距离计算，为什么要使用异或？我们后面结合k桶可以看到，这是经过精心设计的算法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">distance(A, B) = A xor B</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-Routing-table"><a href="#5-2-Routing-table" class="headerlink" title="5.2 Routing table"></a>5.2 Routing table</h3><p>KAD使用k桶(k-bucket)实现一个Routing table，其实就是一个hash table，只是每一个bucket的大小不超过k(目的是控制Routing table的大小)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://anticpp.github.io/2016/11/24/Openssl常用工具/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -957,130 +1113,6 @@ CRT: Certificate，证书
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://anticpp.github.io/2016/02/29/人生若只如初见/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="supergui@live.cn">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="supergui">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="supergui" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/02/29/人生若只如初见/" itemprop="url">
-                  人生若只如初见
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-29T20:18:10+08:00">
-                2016-02-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>《木兰花令 - 拟古决绝词》</p>
-<ul>
-<li>纳兰性德</li>
-</ul>
-<p>人生若只如初见，何事秋风悲画扇。</p>
-<p>等闲变却故人心，却道故人心易变。</p>
-<p>骊山语罢清宵半，泪雨霖铃终不悔。</p>
-<p>何如薄幸锦衣郎，比翼连枝当日愿。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://anticpp.github.io/2016/02/29/hexo安装/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1403,7 +1435,7 @@ hexo server
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
