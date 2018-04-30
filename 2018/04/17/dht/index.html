@@ -95,7 +95,7 @@ BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维
 BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维护资源(resource)当前有哪些节点(peer)也在同时下载的关系。
 1234567891011">
 <meta property="og:image" content="http://anticpp.github.io/images/dht-constant-hash.jpg">
-<meta property="og:updated_time" content="2018-04-30T11:19:10.326Z">
+<meta property="og:updated_time" content="2018-04-30T11:26:36.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DHT">
 <meta name="twitter:description" content="1. 背景BT作为历史上最成功的P2P文件系统，已经在全球实现了彻底的去中心化。BT的P2P网络，不依赖任何机构或者中心依然能够很好的运行。这里面，最关键的设计是引入了DHT。这里我们主要介绍一下为什么要引入DHT，以及DHT的基本原理。
@@ -367,7 +367,7 @@ BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维
 <ol>
 <li>越大的桶存储的是离本节点越<strong><em>近</em></strong>的节点信息(XOR计算距离)</li>
 <li>第N+1个桶存储的节点，比第N个桶存储的节点，距离本节点近了<strong><em>一半</em></strong>。也就是每递增一个桶，节点数量<strong><em>折半</em></strong>。</li>
-<li>桶内所有的节点之间的距离，都一定比桶内节点跟本节点的距离，至少更近<strong><em>一半</em></strong>。</li>
+<li>桶内所有的节点之间的距离，都一定比桶内节点跟本节点的距离，至少更近<strong><em>一半</em></strong>。(桶内节点跟本节点第N位不同，那么这些节点之间的第N位一定相同，也就是这些节点之间的前N位都相同)</li>
 </ol>
 <p>我门用一个K桶大小为4的例子说明:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 假如节点0000保存了全部节点信息，实际上网络很大的时候一个节点的K桶只会保存一部分节点信息</span><br><span class="line">// 下面为节点0000上的K桶</span><br><span class="line"></span><br><span class="line">          -------------------------</span><br><span class="line">          |  0  |  1  |  2  |  3  |</span><br><span class="line">          -------------------------</span><br><span class="line">           1000  0100  0010  0001</span><br><span class="line">           1001  0101  0011</span><br><span class="line">           1010  0110  </span><br><span class="line">           1011  0111</span><br><span class="line">           1100</span><br><span class="line">           1101</span><br><span class="line">           1110</span><br><span class="line">           1111</span><br></pre></td></tr></table></figure>
