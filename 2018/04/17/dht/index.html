@@ -95,7 +95,7 @@ BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维
 BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维护资源(resource)当前有哪些节点(peer)也在同时下载的关系。
 1234567891011">
 <meta property="og:image" content="http://anticpp.github.io/images/dht-constant-hash.jpg">
-<meta property="og:updated_time" content="2018-04-30T11:26:36.413Z">
+<meta property="og:updated_time" content="2018-05-05T07:06:00.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DHT">
 <meta name="twitter:description" content="1. 背景BT作为历史上最成功的P2P文件系统，已经在全球实现了彻底的去中心化。BT的P2P网络，不依赖任何机构或者中心依然能够很好的运行。这里面，最关键的设计是引入了DHT。这里我们主要介绍一下为什么要引入DHT，以及DHT的基本原理。
@@ -362,7 +362,8 @@ BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维
 <p>实际的实现是K桶大小初始化为1，随着每个桶的节点数量超过K，K桶会进行对半分裂。由于不是关键点，我们这里就不详细介绍。</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">               -----------------------------------------------------------------------</span><br><span class="line">K-bucket ---&gt;  |  0  |  1  |  2  |                  ...                 | 158  | 159 |</span><br><span class="line">               -----------------------------------------------------------------------</span><br><span class="line">                  |</span><br><span class="line">                 \|/</span><br><span class="line">               ------------</span><br><span class="line">            -- | NodeInfo |</span><br><span class="line">            |  ------------</span><br><span class="line">            |  | NodeInfo |</span><br><span class="line">         K &lt;   ------------</span><br><span class="line">            |  |   ...    |</span><br><span class="line">            |  ------------</span><br><span class="line">            -- | NodeInfo |</span><br><span class="line">               ------------</span><br></pre></td></tr></table></figure>
-<h3 id="5-3-K桶算法"><a href="#5-3-K桶算法" class="headerlink" title="5.3 K桶算法"></a>5.3 K桶算法</h3><p>那么，一个NodeInfo应该放到哪个桶呢。KAD使用前缀匹配算法，简单来说，第N个桶存储的节点NodeID与当前节点的NodeID前N-1位相同，第N位不同。</p>
+<h3 id="5-3-K桶算法"><a href="#5-3-K桶算法" class="headerlink" title="5.3 K桶算法"></a>5.3 K桶算法</h3><p>那么，一个NodeInfo应该放到哪个桶呢。KAD的算法是，越小(具体实现也可能是越大，算法本质都一样)的桶存储的NodeInfo距离本节点的ID越远，并且每递增一个桶，距离折半。可以用按bit前缀匹配来实现，简单来说，第N个桶存储的节点NodeID与当前节点的NodeID前N-1位相同，第N位不同。</p>
+<p>上面的描述还是有点晦涩，大家可以简单推算一下(XOR计算距离)，第0个桶上面的NodeInfo的ID所有的bit跟本节点ID都不一样（距离2^N，最远），最后一个桶的NodeInfo的ID只有最后一个bit跟本节点ID不一样（距离2^0=1）。</p>
 <p>按照这个算法，有几个比较明显的结论是：</p>
 <ol>
 <li>越大的桶存储的是离本节点越<strong><em>近</em></strong>的节点信息(XOR计算距离)</li>
@@ -433,6 +434,10 @@ BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/05/03/private-addr/" rel="prev" title="IPV4私有地址">
+                IPV4私有地址 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -499,7 +504,7 @@ BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -509,7 +514,7 @@ BT作为一种P2P系统，面临资源索引问题，简单来说资源索引维
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

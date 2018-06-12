@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,49 +84,55 @@
 
 
 
-<meta name="description" content="自动ssh登录，我写了一个autossh的工具。有兴趣的朋友可以试试autossh
+<meta name="description" content="记录一下参加gopher 2018的东西
+Go在Grab地理服务中的实践
+geohash  基于坐标的hash，快速查找附近的司机
+
+goreplay  流量抓取
+
+go-torch  火焰图
 
 
-回到正题，A要ssh登陆到B，不想输入密码。可以在B建立一个对A的ssh信任关系即可。ssh的信任关系是通过rsa实现，具体的操作步骤如下:
-
-A机器生成rsa key
-进入~/.ssh/
-运行ssh-keygen，所有的提示都默认回车即可
-拷贝公钥，cat id_rsa.pub
-
-B机器添加公钥
-进入~/.">
+Error handling in Go 2
+github.com/mpvl/errc
+github.com/mpvl/errd
+try &amp;amp; handle
+refer: Go: the Good">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ssh信任关系">
-<meta property="og:url" content="http://anticpp.github.io/2016/02/29/ssh信任关系/index.html">
+<meta property="og:title" content="gopher-2018">
+<meta property="og:url" content="http://anticpp.github.io/2018/05/11/gopher-2018/index.html">
 <meta property="og:site_name" content="supergui">
-<meta property="og:description" content="自动ssh登录，我写了一个autossh的工具。有兴趣的朋友可以试试autossh
+<meta property="og:description" content="记录一下参加gopher 2018的东西
+Go在Grab地理服务中的实践
+geohash  基于坐标的hash，快速查找附近的司机
+
+goreplay  流量抓取
+
+go-torch  火焰图
 
 
-回到正题，A要ssh登陆到B，不想输入密码。可以在B建立一个对A的ssh信任关系即可。ssh的信任关系是通过rsa实现，具体的操作步骤如下:
-
-A机器生成rsa key
-进入~/.ssh/
-运行ssh-keygen，所有的提示都默认回车即可
-拷贝公钥，cat id_rsa.pub
-
-B机器添加公钥
-进入~/.">
-<meta property="og:updated_time" content="2018-04-17T09:44:52.579Z">
+Error handling in Go 2
+github.com/mpvl/errc
+github.com/mpvl/errd
+try &amp;amp; handle
+refer: Go: the Good">
+<meta property="og:updated_time" content="2018-05-11T15:29:39.044Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ssh信任关系">
-<meta name="twitter:description" content="自动ssh登录，我写了一个autossh的工具。有兴趣的朋友可以试试autossh
+<meta name="twitter:title" content="gopher-2018">
+<meta name="twitter:description" content="记录一下参加gopher 2018的东西
+Go在Grab地理服务中的实践
+geohash  基于坐标的hash，快速查找附近的司机
+
+goreplay  流量抓取
+
+go-torch  火焰图
 
 
-回到正题，A要ssh登陆到B，不想输入密码。可以在B建立一个对A的ssh信任关系即可。ssh的信任关系是通过rsa实现，具体的操作步骤如下:
-
-A机器生成rsa key
-进入~/.ssh/
-运行ssh-keygen，所有的提示都默认回车即可
-拷贝公钥，cat id_rsa.pub
-
-B机器添加公钥
-进入~/.">
+Error handling in Go 2
+github.com/mpvl/errc
+github.com/mpvl/errd
+try &amp;amp; handle
+refer: Go: the Good">
 
 
 
@@ -154,13 +160,13 @@ B机器添加公钥
 
 
 
-  <link rel="canonical" href="http://anticpp.github.io/2016/02/29/ssh信任关系/"/>
+  <link rel="canonical" href="http://anticpp.github.io/2018/05/11/gopher-2018/"/>
 
 
 
 
 
-  <title> ssh信任关系 | supergui </title>
+  <title> gopher-2018 | supergui </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -271,7 +277,7 @@ B机器添加公钥
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://anticpp.github.io/2016/02/29/ssh信任关系/">
+  <link itemprop="mainEntityOfPage" href="http://anticpp.github.io/2018/05/11/gopher-2018/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="supergui@live.cn">
@@ -295,7 +301,7 @@ B机器添加公钥
             
             
               
-                ssh信任关系
+                gopher-2018
               
             
           </h1>
@@ -308,8 +314,8 @@ B机器添加公钥
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-29T19:26:15+08:00">
-                2016-02-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-11T23:28:16+08:00">
+                2018-05-11
               </time>
             
 
@@ -344,25 +350,49 @@ B机器添加公钥
       
 
       
-        <blockquote>
-<p>自动ssh登录，我写了一个autossh的工具。<br>有兴趣的朋友可以试试<a href="https://github.com/anticpp/autossh" target="_blank" rel="external">autossh</a></p>
-</blockquote>
-<blockquote>
-<p>回到正题，A要ssh登陆到B，不想输入密码。可以在B建立一个对A的ssh信任关系即可。<br>ssh的信任关系是通过rsa实现，具体的操作步骤如下:</p>
-</blockquote>
-<h2 id="A机器生成rsa-key"><a href="#A机器生成rsa-key" class="headerlink" title="A机器生成rsa key"></a>A机器生成rsa key</h2><ul>
-<li>进入~/.ssh/</li>
-<li>运行ssh-keygen，所有的提示都默认回车即可</li>
-<li>拷贝公钥，cat id_rsa.pub</li>
+        <p>记录一下参加gopher 2018的东西</p>
+<h2 id="Go在Grab地理服务中的实践"><a href="#Go在Grab地理服务中的实践" class="headerlink" title="Go在Grab地理服务中的实践"></a>Go在Grab地理服务中的实践</h2><ul>
+<li><p>geohash<br>  基于坐标的hash，快速查找附近的司机</p>
+</li>
+<li><p>goreplay<br>  流量抓取</p>
+</li>
+<li><p>go-torch<br>  火焰图</p>
+</li>
 </ul>
-<h2 id="B机器添加公钥"><a href="#B机器添加公钥" class="headerlink" title="B机器添加公钥"></a>B机器添加公钥</h2><ul>
-<li>进入~/.ssh/</li>
-<li>把A生成的公钥，添加到authorized_keys</li>
+<h2 id="Error-handling-in-Go-2"><a href="#Error-handling-in-Go-2" class="headerlink" title="Error handling in Go 2"></a>Error handling in Go 2</h2><ul>
+<li>github.com/mpvl/errc</li>
+<li>github.com/mpvl/errd</li>
+<li>try &amp; handle</li>
+<li>refer: Go: the Good, the Bad and the Ugly</li>
 </ul>
-<h2 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h2><ul>
-<li>从A登陆B机器，无需密码</li>
+<h2 id="Why-we-design-a-fast-key-value-database"><a href="#Why-we-design-a-fast-key-value-database" class="headerlink" title="Why we design a fast key-value database"></a>Why we design a fast key-value database</h2><ul>
+<li>motivation</li>
+<li>levelDB, RocksDB</li>
+<li>LSM Trees/B+ Trees</li>
+<li>Separate keys from values.</li>
+<li>Key stored in <code>LSM</code> Tree</li>
+<li>Value stored in value log.</li>
+<li>CGO evil</li>
 </ul>
-<p><code>注意:</code><br><code>非root账号的ssh信任关系一直都还不行，网上很多资料都说是文件权限问题，试了下都不行。</code><br><code>所以暂时未解，后面找到原因再跟进到文档。</code></p>
+<h2 id="IPFS"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS</h2><ul>
+<li>DHT</li>
+</ul>
+<h2 id="Composition-in-Go"><a href="#Composition-in-Go" class="headerlink" title="Composition in Go"></a>Composition in Go</h2><ul>
+<li>Interface decouple: What you do makes who you are.</li>
+<li><a href="https://gogoing" target="_blank" rel="external">https://gogoing</a>.</li>
+</ul>
+<h2 id="Bazel-build-go"><a href="#Bazel-build-go" class="headerlink" title="Bazel build //:go"></a>Bazel build //:go</h2><ul>
+<li>Bazel</li>
+<li>vgo</li>
+</ul>
+<h2 id="CGO"><a href="#CGO" class="headerlink" title="CGO"></a>CGO</h2><ul>
+<li>Soooooooooooo complex</li>
+</ul>
+<h2 id="arm64的go工具链"><a href="#arm64的go工具链" class="headerlink" title="arm64的go工具链"></a>arm64的go工具链</h2><ul>
+<li><code>go tool</code></li>
+<li>go assembler,/………………</li>
+<li><code>go build -x test.go</code></li>
+</ul>
 
       
     </div>
@@ -384,26 +414,20 @@ B机器添加公钥
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/技术/" rel="tag"># 技术</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/05/cpp-virtual-vs-go-interface/" rel="next" title="Go interface internal">
+                <i class="fa fa-chevron-left"></i> Go interface internal
+              </a>
             
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/29/hexo安装/" rel="prev" title="hexo安装">
-                hexo安装 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -516,7 +540,7 @@ B机器添加公钥
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A机器生成rsa-key"><span class="nav-number">1.</span> <span class="nav-text">A机器生成rsa key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B机器添加公钥"><span class="nav-number">2.</span> <span class="nav-text">B机器添加公钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登陆"><span class="nav-number">3.</span> <span class="nav-text">登陆</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go在Grab地理服务中的实践"><span class="nav-number">1.</span> <span class="nav-text">Go在Grab地理服务中的实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-handling-in-Go-2"><span class="nav-number">2.</span> <span class="nav-text">Error handling in Go 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-we-design-a-fast-key-value-database"><span class="nav-number">3.</span> <span class="nav-text">Why we design a fast key-value database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPFS"><span class="nav-number">4.</span> <span class="nav-text">IPFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Composition-in-Go"><span class="nav-number">5.</span> <span class="nav-text">Composition in Go</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bazel-build-go"><span class="nav-number">6.</span> <span class="nav-text">Bazel build //:go</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGO"><span class="nav-number">7.</span> <span class="nav-text">CGO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arm64的go工具链"><span class="nav-number">8.</span> <span class="nav-text">arm64的go工具链</span></a></li></ol></div>
             
 
           </div>

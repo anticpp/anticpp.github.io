@@ -1,0 +1,665 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Go C++ virtual interface," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="运行期的多态，是很多高级语言的很重要的特性。我们可以在运行期根据实际创建的对象，决定实际所要运行的函数。C++可以通过virtual member function实现运行期的多态，同样，在Go我们可以通过interface实现类似的机制。虽然C++的virtual和Go的interface本质上还是有很多区别，但是不妨碍我们深入探讨一下关于如何实现运行期多态。
+
+Note: 
+
+不去理解实现机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go interface internal">
+<meta property="og:url" content="http://anticpp.github.io/2018/05/05/cpp-virtual-vs-go-interface/index.html">
+<meta property="og:site_name" content="supergui">
+<meta property="og:description" content="运行期的多态，是很多高级语言的很重要的特性。我们可以在运行期根据实际创建的对象，决定实际所要运行的函数。C++可以通过virtual member function实现运行期的多态，同样，在Go我们可以通过interface实现类似的机制。虽然C++的virtual和Go的interface本质上还是有很多区别，但是不妨碍我们深入探讨一下关于如何实现运行期多态。
+
+Note: 
+
+不去理解实现机制">
+<meta property="og:updated_time" content="2018-05-14T11:31:47.898Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go interface internal">
+<meta name="twitter:description" content="运行期的多态，是很多高级语言的很重要的特性。我们可以在运行期根据实际创建的对象，决定实际所要运行的函数。C++可以通过virtual member function实现运行期的多态，同样，在Go我们可以通过interface实现类似的机制。虽然C++的virtual和Go的interface本质上还是有很多区别，但是不妨碍我们深入探讨一下关于如何实现运行期多态。
+
+Note: 
+
+不去理解实现机制">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://anticpp.github.io/2018/05/05/cpp-virtual-vs-go-interface/"/>
+
+
+
+
+
+  <title> Go interface internal | supergui </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">supergui</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">迁于乔木，出自幽谷</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://anticpp.github.io/2018/05/05/cpp-virtual-vs-go-interface/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="supergui@live.cn">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="supergui">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="supergui" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Go interface internal
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-05T03:01:17+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>运行期的多态，是很多高级语言的很重要的特性。我们可以在运行期根据实际创建的对象，决定实际所要运行的函数。<br>C++可以通过virtual member function实现运行期的多态，同样，在Go我们可以通过interface实现类似的机制。虽然C++的virtual和Go的interface本质上还是有很多区别，但是不妨碍我们深入探讨一下关于如何实现运行期多态。</p>
+<blockquote>
+<p>Note: </p>
+<ol>
+<li>不去理解实现机制，并不影响我们使用C++或者Go（只要遵循语言的标准并不会有什么麻烦）。当然，如果能更深入的理解实现，本身有利于加深我们对代码的理解。</li>
+<li>我们讨论的的实现很可能只代表主流编译器的实现，并不一定代表语言的标准。编译器需要遵循语言规范去实现，但是如何实现往往是编译器自己的决定。</li>
+</ol>
+</blockquote>
+<h2 id="C-多态"><a href="#C-多态" class="headerlink" title="C++多态"></a>C++多态</h2><p>我们都知道C++的多态，通过基类里面把成员函数定义为virtual，继承类可以重新实现这个函数。使用一个基类的指针指向对象，并且通过该指针执行那个函数，具体执行的是基类还是继承类的函数，取决于运行期该对象的类型。C++的多态/继承当然没有那么简单，还有非常多的细节特性，想要完全说明白几乎不可能（建议去翻C++标准或者经典类的书）。我们这里只需要用最简单的例子，去说明实现的原理。</p>
+<p>例如下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Base &#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void func() &#123; std::cout &lt;&lt; &quot;Hello Base&quot; &lt;&lt; std::endl; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class D : public Base &#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void func() &#123; std::cout &lt;&lt; &quot;Hello D&quot; &lt;&lt; std::endl; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// main.cpp</span><br><span class="line">Base *p = new D();</span><br><span class="line">p-&gt;func();</span><br></pre></td></tr></table></figure>
+<p>由于指针p指向的对象，实际上是类型D。而且<code>func()</code>定义为<code>virtual</code>，所以实际执行的是D的<code>func()</code>，程序输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello D</span><br></pre></td></tr></table></figure>
+<h2 id="C-vtable"><a href="#C-vtable" class="headerlink" title="C++ vtable"></a>C++ vtable</h2><p>C++通过vtable实现多态，C++在<strong><em>编译期</em></strong>给每个类生成一个vtable。vtable就是一个函数地址数组，记录了这个类所有的virtual function指向的函数地址。只要该类声明了function为virtual，或者它的父类/祖先类声明了virtual，则该function就是virtual。</p>
+<p>例如，<code>class D</code>的vtable只包涵一个元素，就是<code>func</code>的地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class D : vtable --&gt; -----------</span><br><span class="line">                     | D::func |</span><br><span class="line">                     -----------</span><br><span class="line">                     |  null   |(null for array end)</span><br><span class="line">                     -----------</span><br></pre></td></tr></table></figure>
+<p>这里需要注意，<code>class D</code>的<code>func</code>没有指向<code>Base::func</code>，而是指向了<code>D::func</code>，是由于<code>class D</code>重新实现了<code>virtual func</code>。如果<code>class D</code>没有实现<code>virtual func</code>，那么<code>class D</code>的<code>func</code>会指向<code>Base::func</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class D : vtable --&gt; --------------</span><br><span class="line">                     | Base::func |</span><br><span class="line">                     --------------</span><br><span class="line">                     |  null      |(null for array end)</span><br><span class="line">                     --------------</span><br></pre></td></tr></table></figure>
+<p>那么，vtable是怎么使用的呢。在我们创建对象的时候，编译器会在创建对象的内存的开始插入vtable的地址指针vptr(很tricky)。例如，我们<code>new D()</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                                           vtable</span><br><span class="line">p = new D() -----&gt; ------------          -----------</span><br><span class="line">                   |  vptr    | --------&gt;| D::func |</span><br><span class="line">                   ------------          -----------</span><br><span class="line">                   |          |          |  null   |</span><br><span class="line">                   | D object |          -----------</span><br><span class="line">                   |          |</span><br><span class="line">                   ------------</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>所以即使是一个空的class，如果有virtual function，那么该class的sizeof也不会是0，而是一个指针的大小(sizeof(void *))。</p>
+</blockquote>
+<p>当我们通过该对象调用<code>func</code>的时候，因为该function为virtual，会通过<code>vptr</code>找到<code>vtable</code>，并且在<code>vtable</code>里面找到<code>func</code>的地址，并且执行。</p>
+<p>C++通过vtable实现了运行期的多态，但是vtable是在编译器静态绑定，运行期需要进行vtable的查找。</p>
+<h2 id="Go-interface"><a href="#Go-interface" class="headerlink" title="Go interface"></a>Go interface</h2><p>Go的interface是Go语言一个很重要的设计，借鉴了Java和C++的部分语言特性，最大的改变是去掉了C++和Java里面的显示继承。interface只是单纯的定义分行为（方法），如果我们要定义一种类型属于该interface，并不需要显示的继承该interface，只需要对该类型实现所有interface所声明的方法，那么这个类型就是属于该interface。</p>
+<p>这里涉及的设计哲学是<code>What I do makes who I am</code>，不同于C++/Java的<code>I declare who I am</code>。这是一种充分<code>解耦</code>的设计哲学，打破 了类型之间的强耦合。其实跟现实世界很像，你是什么样的人，不取决于你自己怎么说或者你身上的既定的标签，而取决于你自己的行为。例如，你成天跟大家说你是君子不代表你就是一个君子，你的君子行径才能决定。嗯，有点跑题了，我们还是回到正轨。</p>
+<p>例如下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">type Base interface &#123;</span><br><span class="line">    func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type D struct &#123;&#125;</span><br><span class="line"></span><br><span class="line">func (d *D) func() &#123;</span><br><span class="line">    fmt.Println(&quot;Hello D&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// main.go</span><br><span class="line">var p Base = new(D)</span><br><span class="line">p.func()</span><br></pre></td></tr></table></figure>
+<p>由于p指向的对象，实际上是类型D，所以最后执行的是D的<code>func()</code>，程序输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello D</span><br></pre></td></tr></table></figure>
+<h2 id="Go-itable"><a href="#Go-itable" class="headerlink" title="Go itable"></a>Go itable</h2><p>Go的interface结构包含2部分，第一部分是指向实际对象的value，第二部分是一个地址数组<code>itable</code>（有点像C++的vtable）。例如<code>interface Base</code>的结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Base --&gt;  -------------</span><br><span class="line">          |   value   |</span><br><span class="line">          -------------         ---------</span><br><span class="line">          |  itable   | -----&gt;  |  func |</span><br><span class="line">          -------------         ---------</span><br><span class="line">                                |  null |</span><br><span class="line">                                ---------</span><br></pre></td></tr></table></figure>
+<p>当我们执行<code>var p Base = new(D)</code>时，会把左值拷贝给value，并且通过查找<code>D</code>的函数列表组装<code>itable</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Base --&gt;  -------------                                        -------------------</span><br><span class="line">          |   value   |-------------------------------------&gt;  | address of D()  |</span><br><span class="line">          -------------         ---------                      -------------------</span><br><span class="line">          |  itable   | -----&gt;  |  func |---------------</span><br><span class="line">          -------------         ---------              |            -------------</span><br><span class="line">                                |  null |              |----------&gt; | D::func() |</span><br><span class="line">                                ---------                           -------------</span><br></pre></td></tr></table></figure>
+<p>所以，当我们执行<code>p-&gt;func()</code>时，编译器已经知道具体执行的是<code>D::func()</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>C++和Go interface内部实现机制并不一样，但是都可以实现运行期的多态绑定。就是说，我们可以根据运行期实际创建的对象是什么，来决定运行的函数。</p>
+<p>C++通过编译器静态产生vtable的方式实现，但是需要在运行期进行vtable查找，会带来运行期开销。</p>
+<p>Go interface在运行期计算itable，好处是在执行的时候基本上是O(1)开销。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go-C-virtual-interface/" rel="tag"># Go C++ virtual interface</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/03/private-addr/" rel="next" title="IPV4私有地址">
+                <i class="fa fa-chevron-left"></i> IPV4私有地址
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/11/gopher-2018/" rel="prev" title="gopher-2018">
+                gopher-2018 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="supergui@live.cn" />
+          <p class="site-author-name" itemprop="name">supergui@live.cn</p>
+          <p class="site-description motion-element" itemprop="description">旗帜鲜明的站在C++的对立面</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-多态"><span class="nav-number">1.</span> <span class="nav-text">C++多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-vtable"><span class="nav-number">2.</span> <span class="nav-text">C++ vtable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-interface"><span class="nav-number">3.</span> <span class="nav-text">Go interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-itable"><span class="nav-number">4.</span> <span class="nav-text">Go itable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">supergui@live.cn</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
