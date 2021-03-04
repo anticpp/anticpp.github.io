@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>supergui</title>
+  <title>Tag: tools | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="旗帜鲜明的站在C++的对立面">
 <meta property="og:type" content="website">
 <meta property="og:title" content="supergui">
-<meta property="og:url" content="http://anticpp.github.io/page/2/index.html">
+<meta property="og:url" content="http://anticpp.github.io/tags/tools/index.html">
 <meta property="og:site_name" content="supergui">
 <meta property="og:description" content="旗帜鲜明的站在C++的对立面">
 <meta name="twitter:card" content="summary">
@@ -65,6 +65,53 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-openssl-tools" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/24/openssl-tools/" class="article-date">
+  <time datetime="2016-11-24T09:34:05.000Z" itemprop="datePublished">2016-11-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/24/openssl-tools/">Openssl tools</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-生成rsa密钥文件"><a href="#1-生成rsa密钥文件" class="headerlink" title="1. 生成rsa密钥文件"></a>1. 生成rsa密钥文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out private/cakey.pem</span><br></pre></td></tr></table></figure>
+<h1 id="2-查看密钥文件"><a href="#2-查看密钥文件" class="headerlink" title="2. 查看密钥文件"></a>2. 查看密钥文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsa -noout -text -in private/cakey.pem</span><br></pre></td></tr></table></figure>
+<h1 id="3-生成CSR"><a href="#3-生成CSR" class="headerlink" title="3. 生成CSR"></a>3. 生成CSR</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -key server_key.pem -out server_csr.pem</span><br></pre></td></tr></table></figure>
+<pre><code>依赖：密钥文件server_key.pem
+</code></pre><h1 id="4-查看CSR信息"><a href="#4-查看CSR信息" class="headerlink" title="4. 查看CSR信息"></a>4. 查看CSR信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -noout -text -in server_csr.pem</span><br></pre></td></tr></table></figure>
+<h1 id="5-生成证书"><a href="#5-生成证书" class="headerlink" title="5. 生成证书"></a>5. 生成证书</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -key private/cakey.pem -out cacert.pem</span><br></pre></td></tr></table></figure>
+<p>依赖：密钥文件cakey.pem</p>
+<h1 id="6-对CSR签名，生成证书"><a href="#6-对CSR签名，生成证书" class="headerlink" title="6. 对CSR签名，生成证书"></a>6. 对CSR签名，生成证书</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl ca -in server_csr.pem -out server_crt.pem</span><br></pre></td></tr></table></figure>
+<h1 id="6-查看证书"><a href="#6-查看证书" class="headerlink" title="6. 查看证书"></a>6. 查看证书</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -noout -text -in server_crt.pem</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2016/11/24/openssl-tools/" data-id="ckluhuoft00075sp30ywymx47" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openssl/">openssl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-hexo-install" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -196,11 +243,6 @@
 
   
 
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
 
 </section>
         

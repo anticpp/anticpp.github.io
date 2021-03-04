@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archiv: 2016 | supergui</title>
+  <title>Tag: meeting | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="旗帜鲜明的站在C++的对立面">
 <meta property="og:type" content="website">
 <meta property="og:title" content="supergui">
-<meta property="og:url" content="http://anticpp.github.io/archives/2016/index.html">
+<meta property="og:url" content="http://anticpp.github.io/tags/meeting/index.html">
 <meta property="og:site_name" content="supergui">
 <meta property="og:description" content="旗帜鲜明的站在C++的对立面">
 <meta name="twitter:card" content="summary">
@@ -66,150 +66,86 @@
       <div class="outer">
         <section id="main">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/24/openssl-tools/" class="archive-article-date">
-  <time datetime="2016-11-24T09:34:05.000Z" itemprop="datePublished">Nov 24</time>
+    <article id="post-gopher-2018" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/11/gopher-2018/" class="article-date">
+  <time datetime="2018-05-11T15:28:16.000Z" itemprop="datePublished">2018-05-11</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/24/openssl-tools/">Openssl tools</a>
+      <a class="article-title" href="/2018/05/11/gopher-2018/">Gopher 2018 shanghai memo</a>
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/23/ssl-tls/" class="archive-article-date">
-  <time datetime="2016-11-23T06:12:57.000Z" itemprop="datePublished">Nov 23</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/23/ssl-tls/">ssl/tls</a>
-    </h1>
-  
+        <p>记录一下参加gopher 2018的东西</p>
+<h2 id="Go在Grab地理服务中的实践"><a href="#Go在Grab地理服务中的实践" class="headerlink" title="Go在Grab地理服务中的实践"></a>Go在Grab地理服务中的实践</h2><ul>
+<li><p>geohash<br>  基于坐标的hash，快速查找附近的司机</p>
+</li>
+<li><p>goreplay<br>  流量抓取</p>
+</li>
+<li><p>go-torch<br>  火焰图</p>
+</li>
+</ul>
+<h2 id="Error-handling-in-Go-2"><a href="#Error-handling-in-Go-2" class="headerlink" title="Error handling in Go 2"></a>Error handling in Go 2</h2><ul>
+<li>github.com/mpvl/errc</li>
+<li>github.com/mpvl/errd</li>
+<li>try &amp; handle</li>
+<li>refer: Go: the Good, the Bad and the Ugly</li>
+</ul>
+<h2 id="Why-we-design-a-fast-key-value-database"><a href="#Why-we-design-a-fast-key-value-database" class="headerlink" title="Why we design a fast key-value database"></a>Why we design a fast key-value database</h2><ul>
+<li>motivation</li>
+<li>levelDB, RocksDB</li>
+<li>LSM Trees/B+ Trees</li>
+<li>Separate keys from values.</li>
+<li>Key stored in <code>LSM</code> Tree</li>
+<li>Value stored in value log.</li>
+<li>CGO evil</li>
+</ul>
+<h2 id="IPFS"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS</h2><ul>
+<li>DHT</li>
+</ul>
+<h2 id="Composition-in-Go"><a href="#Composition-in-Go" class="headerlink" title="Composition in Go"></a>Composition in Go</h2><ul>
+<li>Interface decouple: What you do makes who you are.</li>
+<li><a href="https://gogoing" target="_blank" rel="external">https://gogoing</a>.</li>
+</ul>
+<h2 id="Bazel-build-go"><a href="#Bazel-build-go" class="headerlink" title="Bazel build //:go"></a>Bazel build //:go</h2><ul>
+<li>Bazel</li>
+<li>vgo</li>
+</ul>
+<h2 id="CGO"><a href="#CGO" class="headerlink" title="CGO"></a>CGO</h2><ul>
+<li>Soooooooooooo complex</li>
+</ul>
+<h2 id="arm64的go工具链"><a href="#arm64的go工具链" class="headerlink" title="arm64的go工具链"></a>arm64的go工具链</h2><ul>
+<li><code>go tool</code></li>
+<li>go assembler,/………………</li>
+<li><code>go build -x test.go</code></li>
+</ul>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/14/udp-size/" class="archive-article-date">
-  <time datetime="2016-11-14T11:51:27.000Z" itemprop="datePublished">Nov 14</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/14/udp-size/">UDP package size</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/03/31/ffmpeg/" class="archive-article-date">
-  <time datetime="2016-03-31T13:05:06.000Z" itemprop="datePublished">Mar 31</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2018/05/11/gopher-2018/" data-id="ckluhuofy000g5sp3x3i5h61x" class="article-share-link">Teilen</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/03/31/ffmpeg/">FFmpeg</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/03/15/python-gevent-vs-go-coroutine/" class="archive-article-date">
-  <time datetime="2016-03-15T02:26:39.000Z" itemprop="datePublished">Mar 15</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/03/15/python-gevent-vs-go-coroutine/">python gevent VS go coroutine</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/meeting/">meeting</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/02/29/hexo-install/" class="archive-article-date">
-  <time datetime="2016-02-29T11:58:22.000Z" itemprop="datePublished">Feb 29</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/02/29/hexo-install/">Hexo install</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/02/29/ssh-authorized/" class="archive-article-date">
-  <time datetime="2016-02-29T11:26:15.000Z" itemprop="datePublished">Feb 29</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/02/29/ssh-authorized/">SSH authorization</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
 

@@ -3,17 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archiv: 2016 | supergui</title>
+  <title>Openssl tools | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="旗帜鲜明的站在C++的对立面">
-<meta property="og:type" content="website">
-<meta property="og:title" content="supergui">
-<meta property="og:url" content="http://anticpp.github.io/archives/2016/index.html">
+  <meta name="description" content="1. 生成rsa密钥文件1openssl genrsa -out private/cakey.pem
+2. 查看密钥文件1openssl rsa -noout -text -in private/cakey.pem
+3. 生成CSR1openssl req -new -key server_key.pem -out server_csr.pem
+依赖：密钥文件server_key.pem
+4. 查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openssl tools">
+<meta property="og:url" content="http://anticpp.github.io/2016/11/24/openssl-tools/index.html">
 <meta property="og:site_name" content="supergui">
-<meta property="og:description" content="旗帜鲜明的站在C++的对立面">
+<meta property="og:description" content="1. 生成rsa密钥文件1openssl genrsa -out private/cakey.pem
+2. 查看密钥文件1openssl rsa -noout -text -in private/cakey.pem
+3. 生成CSR1openssl req -new -key server_key.pem -out server_csr.pem
+依赖：密钥文件server_key.pem
+4. 查">
+<meta property="og:updated_time" content="2021-03-04T07:04:18.106Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="supergui">
-<meta name="twitter:description" content="旗帜鲜明的站在C++的对立面">
+<meta name="twitter:title" content="Openssl tools">
+<meta name="twitter:description" content="1. 生成rsa密钥文件1openssl genrsa -out private/cakey.pem
+2. 查看密钥文件1openssl rsa -noout -text -in private/cakey.pem
+3. 生成CSR1openssl req -new -key server_key.pem -out server_csr.pem
+依赖：密钥文件server_key.pem
+4. 查">
   
     <link rel="alternate" href="/atom.xml" title="supergui" type="application/atom+xml">
   
@@ -64,154 +77,71 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/24/openssl-tools/" class="archive-article-date">
-  <time datetime="2016-11-24T09:34:05.000Z" itemprop="datePublished">Nov 24</time>
+        <section id="main"><article id="post-openssl-tools" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/24/openssl-tools/" class="article-date">
+  <time datetime="2016-11-24T09:34:05.000Z" itemprop="datePublished">2016-11-24</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/24/openssl-tools/">Openssl tools</a>
+    <h1 class="article-title" itemprop="name">
+      Openssl tools
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/23/ssl-tls/" class="archive-article-date">
-  <time datetime="2016-11-23T06:12:57.000Z" itemprop="datePublished">Nov 23</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/23/ssl-tls/">ssl/tls</a>
-    </h1>
-  
+        <h1 id="1-生成rsa密钥文件"><a href="#1-生成rsa密钥文件" class="headerlink" title="1. 生成rsa密钥文件"></a>1. 生成rsa密钥文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out private/cakey.pem</span><br></pre></td></tr></table></figure>
+<h1 id="2-查看密钥文件"><a href="#2-查看密钥文件" class="headerlink" title="2. 查看密钥文件"></a>2. 查看密钥文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsa -noout -text -in private/cakey.pem</span><br></pre></td></tr></table></figure>
+<h1 id="3-生成CSR"><a href="#3-生成CSR" class="headerlink" title="3. 生成CSR"></a>3. 生成CSR</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -key server_key.pem -out server_csr.pem</span><br></pre></td></tr></table></figure>
+<pre><code>依赖：密钥文件server_key.pem
+</code></pre><h1 id="4-查看CSR信息"><a href="#4-查看CSR信息" class="headerlink" title="4. 查看CSR信息"></a>4. 查看CSR信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -noout -text -in server_csr.pem</span><br></pre></td></tr></table></figure>
+<h1 id="5-生成证书"><a href="#5-生成证书" class="headerlink" title="5. 生成证书"></a>5. 生成证书</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -key private/cakey.pem -out cacert.pem</span><br></pre></td></tr></table></figure>
+<p>依赖：密钥文件cakey.pem</p>
+<h1 id="6-对CSR签名，生成证书"><a href="#6-对CSR签名，生成证书" class="headerlink" title="6. 对CSR签名，生成证书"></a>6. 对CSR签名，生成证书</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl ca -in server_csr.pem -out server_crt.pem</span><br></pre></td></tr></table></figure>
+<h1 id="6-查看证书"><a href="#6-查看证书" class="headerlink" title="6. 查看证书"></a>6. 查看证书</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -noout -text -in server_crt.pem</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/14/udp-size/" class="archive-article-date">
-  <time datetime="2016-11-14T11:51:27.000Z" itemprop="datePublished">Nov 14</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/14/udp-size/">UDP package size</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/03/31/ffmpeg/" class="archive-article-date">
-  <time datetime="2016-03-31T13:05:06.000Z" itemprop="datePublished">Mar 31</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2016/11/24/openssl-tools/" data-id="ckluhuoft00075sp30ywymx47" class="article-share-link">Teilen</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/03/31/ffmpeg/">FFmpeg</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/03/15/python-gevent-vs-go-coroutine/" class="archive-article-date">
-  <time datetime="2016-03-15T02:26:39.000Z" itemprop="datePublished">Mar 15</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/03/15/python-gevent-vs-go-coroutine/">python gevent VS go coroutine</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openssl/">openssl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/02/29/hexo-install/" class="archive-article-date">
-  <time datetime="2016-02-29T11:58:22.000Z" itemprop="datePublished">Feb 29</time>
-</a>
-      
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/02/29/hexo-install/">Hexo install</a>
-    </h1>
+    <a href="/2018/04/17/dht/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          DHT
+        
+      </div>
+    </a>
   
+  
+    <a href="/2016/11/23/ssl-tls/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">ssl/tls</div>
+    </a>
+  
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/02/29/ssh-authorized/" class="archive-article-date">
-  <time datetime="2016-02-29T11:26:15.000Z" itemprop="datePublished">Feb 29</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/02/29/ssh-authorized/">SSH authorization</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
 
 </section>
         

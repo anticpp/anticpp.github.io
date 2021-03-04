@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archiv: 2016 | supergui</title>
+  <title>Tag: mq | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="旗帜鲜明的站在C++的对立面">
 <meta property="og:type" content="website">
 <meta property="og:title" content="supergui">
-<meta property="og:url" content="http://anticpp.github.io/archives/2016/index.html">
+<meta property="og:url" content="http://anticpp.github.io/tags/mq/index.html">
 <meta property="og:site_name" content="supergui">
 <meta property="og:description" content="旗帜鲜明的站在C++的对立面">
 <meta name="twitter:card" content="summary">
@@ -66,150 +66,82 @@
       <div class="outer">
         <section id="main">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/24/openssl-tools/" class="archive-article-date">
-  <time datetime="2016-11-24T09:34:05.000Z" itemprop="datePublished">Nov 24</time>
+    <article id="post-message-queue" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/04/message-queue/" class="article-date">
+  <time datetime="2021-03-04T02:15:47.000Z" itemprop="datePublished">2021-03-04</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/24/openssl-tools/">Openssl tools</a>
+      <a class="article-title" href="/2021/03/04/message-queue/">Message queue</a>
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/23/ssl-tls/" class="archive-article-date">
-  <time datetime="2016-11-23T06:12:57.000Z" itemprop="datePublished">Nov 23</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/23/ssl-tls/">ssl/tls</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/11/14/udp-size/" class="archive-article-date">
-  <time datetime="2016-11-14T11:51:27.000Z" itemprop="datePublished">Nov 14</time>
-</a>
+        <p>不同的消息队列的消息语义</p>
+<h2 id="nsq"><a href="#nsq" class="headerlink" title="nsq"></a>nsq</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">                               Consumer Group</span><br><span class="line">                                 --------</span><br><span class="line">topic --        ------------------- C0  |</span><br><span class="line">       |       \|/               |      |</span><br><span class="line">       --&gt; channel0 &lt;-------------- C1  |</span><br><span class="line">       |       /|\               |      |</span><br><span class="line">       |        ------------------- C2  |</span><br><span class="line">       --&gt; channel1              |      |</span><br><span class="line">       |                         --------</span><br><span class="line">       --&gt; channel2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>分发</li>
+</ul>
+<p>每一个topic会分发到多个channel，每个channel是独立的队列。不同的Consumer Group消费不同的channel。</p>
+<ul>
+<li>流控</li>
+</ul>
+<p>每一个消费者实例，通过RDY告知nsq自己的处理窗口大小，消费者通过RDY来控制消息的处理吞吐。同一个channel的消息，只会分发给Consumer Group的一个实例。</p>
+<ul>
+<li>并发</li>
+</ul>
+<p>channel对同一个消费者实例，会并发通知多个消息，取决于消费者实例的RDY。channel对于多个消费者实例，也会并行通知。也就是如果想提高消费的吞吐，可以提高每一个消费者实例的RDY大小，也可以增加消费者实例。</p>
+<ul>
+<li>有序性</li>
+</ul>
+<p>由于channel的通知并行性，以及消息的REQUEUE语义，消息的有序性不保证</p>
+<h2 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">topic --                       Consumer Group</span><br><span class="line">       |                         ---------</span><br><span class="line">       --&gt; partition0 &lt;------------- C0  |</span><br><span class="line">       |                         |       |                          </span><br><span class="line">       --&gt; partition1 &lt;------------- C1  |</span><br><span class="line">       |                         |       |</span><br><span class="line">       --&gt; partition2 &lt;------------- C2  |</span><br><span class="line">                                 |       |</span><br><span class="line">                                 |   C3  |</span><br><span class="line">                                 ---------</span><br></pre></td></tr></table></figure>
+<ul>
+<li>分发</li>
+</ul>
+<p>kafka内部会维护每一个Consumer Group对topic的消费状态(offset)，不同的Consumer Group可以单独订阅消费，互相不影响。</p>
+<ul>
+<li>流控</li>
+</ul>
+<p>消费者主动拉取消息，并且自行调整消息offset</p>
+<ul>
+<li>并发</li>
+</ul>
+<ol>
+<li>同一个消费者实例可以同时拉取多个消息进行并行消费，然后一次性调整offset</li>
+<li>topic可以进行多个partition，多个partition可以有多个消费者实例并行进行消费</li>
+</ol>
+<ul>
+<li>有序性</li>
+</ul>
+<p>kafka保证topic的每一个partition是顺序的</p>
+<p>由于channel的通知并行性，以及消息的REQUEUE语义，消息的有序性不保证</p>
+<h2 id="pulsar"><a href="#pulsar" class="headerlink" title="pulsar"></a>pulsar</h2>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/14/udp-size/">UDP package size</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/03/31/ffmpeg/" class="archive-article-date">
-  <time datetime="2016-03-31T13:05:06.000Z" itemprop="datePublished">Mar 31</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2021/03/04/message-queue/" data-id="ckluhuofv00085sp3r92lva5k" class="article-share-link">Teilen</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/03/31/ffmpeg/">FFmpeg</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/03/15/python-gevent-vs-go-coroutine/" class="archive-article-date">
-  <time datetime="2016-03-15T02:26:39.000Z" itemprop="datePublished">Mar 15</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/03/15/python-gevent-vs-go-coroutine/">python gevent VS go coroutine</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mq/">mq</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/02/29/hexo-install/" class="archive-article-date">
-  <time datetime="2016-02-29T11:58:22.000Z" itemprop="datePublished">Feb 29</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/02/29/hexo-install/">Hexo install</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/02/29/ssh-authorized/" class="archive-article-date">
-  <time datetime="2016-02-29T11:26:15.000Z" itemprop="datePublished">Feb 29</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/02/29/ssh-authorized/">SSH authorization</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
 

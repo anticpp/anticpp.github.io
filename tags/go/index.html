@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: Go C++ virtual interface | supergui</title>
+  <title>Tag: go | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="旗帜鲜明的站在C++的对立面">
 <meta property="og:type" content="website">
 <meta property="og:title" content="supergui">
-<meta property="og:url" content="http://anticpp.github.io/tags/Go-C-virtual-interface/index.html">
+<meta property="og:url" content="http://anticpp.github.io/tags/go/index.html">
 <meta property="og:site_name" content="supergui">
 <meta property="og:description" content="旗帜鲜明的站在C++的对立面">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://anticpp.github.io"></form>
@@ -65,6 +65,87 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-gopher-2018" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/11/gopher-2018/" class="article-date">
+  <time datetime="2018-05-11T15:28:16.000Z" itemprop="datePublished">2018-05-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/11/gopher-2018/">Gopher 2018 shanghai memo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录一下参加gopher 2018的东西</p>
+<h2 id="Go在Grab地理服务中的实践"><a href="#Go在Grab地理服务中的实践" class="headerlink" title="Go在Grab地理服务中的实践"></a>Go在Grab地理服务中的实践</h2><ul>
+<li><p>geohash<br>  基于坐标的hash，快速查找附近的司机</p>
+</li>
+<li><p>goreplay<br>  流量抓取</p>
+</li>
+<li><p>go-torch<br>  火焰图</p>
+</li>
+</ul>
+<h2 id="Error-handling-in-Go-2"><a href="#Error-handling-in-Go-2" class="headerlink" title="Error handling in Go 2"></a>Error handling in Go 2</h2><ul>
+<li>github.com/mpvl/errc</li>
+<li>github.com/mpvl/errd</li>
+<li>try &amp; handle</li>
+<li>refer: Go: the Good, the Bad and the Ugly</li>
+</ul>
+<h2 id="Why-we-design-a-fast-key-value-database"><a href="#Why-we-design-a-fast-key-value-database" class="headerlink" title="Why we design a fast key-value database"></a>Why we design a fast key-value database</h2><ul>
+<li>motivation</li>
+<li>levelDB, RocksDB</li>
+<li>LSM Trees/B+ Trees</li>
+<li>Separate keys from values.</li>
+<li>Key stored in <code>LSM</code> Tree</li>
+<li>Value stored in value log.</li>
+<li>CGO evil</li>
+</ul>
+<h2 id="IPFS"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS</h2><ul>
+<li>DHT</li>
+</ul>
+<h2 id="Composition-in-Go"><a href="#Composition-in-Go" class="headerlink" title="Composition in Go"></a>Composition in Go</h2><ul>
+<li>Interface decouple: What you do makes who you are.</li>
+<li><a href="https://gogoing" target="_blank" rel="external">https://gogoing</a>.</li>
+</ul>
+<h2 id="Bazel-build-go"><a href="#Bazel-build-go" class="headerlink" title="Bazel build //:go"></a>Bazel build //:go</h2><ul>
+<li>Bazel</li>
+<li>vgo</li>
+</ul>
+<h2 id="CGO"><a href="#CGO" class="headerlink" title="CGO"></a>CGO</h2><ul>
+<li>Soooooooooooo complex</li>
+</ul>
+<h2 id="arm64的go工具链"><a href="#arm64的go工具链" class="headerlink" title="arm64的go工具链"></a>arm64的go工具链</h2><ul>
+<li><code>go tool</code></li>
+<li>go assembler,/………………</li>
+<li><code>go build -x test.go</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2018/05/11/gopher-2018/" data-id="ckluhuofy000g5sp3x3i5h61x" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/meeting/">meeting</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-cpp-virtual-vs-go-interface" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -131,10 +212,73 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://anticpp.github.io/2018/05/05/cpp-virtual-vs-go-interface/" data-id="cklu9c49k000b7rp3z8aaj603" class="article-share-link">Share</a>
+      <a data-url="http://anticpp.github.io/2018/05/05/cpp-virtual-vs-go-interface/" data-id="ckluhuofr00035sp333mh6kkk" class="article-share-link">Teilen</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Go-C-virtual-interface/">Go C++ virtual interface</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programing-lanuage/">programing lanuage</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-gevent-vs-go-coroutine" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/15/python-gevent-vs-go-coroutine/" class="article-date">
+  <time datetime="2016-03-15T02:26:39.000Z" itemprop="datePublished">2016-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/15/python-gevent-vs-go-coroutine/">python gevent VS go coroutine</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>针对python-threading、python-gevent和go-coroutine进行压测对比</p>
+<h2 id="压测环境"><a href="#压测环境" class="headerlink" title="压测环境"></a>压测环境</h2><ul>
+<li>压测机器是我的一台阿里云ECS机器</li>
+<li>CPU x86_64 单核</li>
+<li>内存 1G</li>
+<li>操作系统Linux iZ94mudtv23Z 2.6.32-431.23.3.el6.x86_64 Centos 6.5</li>
+<li>python 2.7</li>
+<li>go 1.5.1</li>
+</ul>
+<h2 id="压测模型"><a href="#压测模型" class="headerlink" title="压测模型"></a>压测模型</h2><ul>
+<li>测试不同并发上下文情况下，进程占用内存、CPU的情况</li>
+<li>并发数由1000逐步递增到50000</li>
+</ul>
+<h2 id="压测数据"><a href="#压测数据" class="headerlink" title="压测数据"></a>压测数据</h2><h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p><img src="/images/bench_vmem.png" alt="bench_vmem"></p>
+<h3 id="物理内存"><a href="#物理内存" class="headerlink" title="物理内存"></a>物理内存</h3><p><img src="/images/bench_mem.png" alt="bench_mem"></p>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p><img src="/images/bench_cpu.png" alt="bench_cpu"></p>
+<h2 id="压测结论"><a href="#压测结论" class="headerlink" title="压测结论"></a>压测结论</h2><ul>
+<li>总体性能比较go-coroutine &gt; python-gevent &gt; python-threading</li>
+<li>python-threading基本到15000并发数就上不去，可能是系统资源已经到了瓶颈</li>
+<li>python-gevent在并发数较小时表现不错，随着并发数上涨，内存和CPU的增长也较快</li>
+<li>python-gevent一开始就吃虚拟内存比较多</li>
+<li>go-coroutine性能表现出色，随着并发数上涨，内存和CPU占用都维持在比较平稳的水平</li>
+<li>总的来说不管是python-gevent还是go-coroutine，在用户态进行的context调度，比内核的threading消耗小很多</li>
+</ul>
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><p><a href="https://github.com/anticpp/coroutine_benchmark" target="_blank" rel="external">github代码</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2016/03/15/python-gevent-vs-go-coroutine/" data-id="ckluhuofx000c5sp3w6fdygjc" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programing-lanuage/">programing lanuage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
 
     </footer>
   </div>
@@ -156,7 +300,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Go-C-virtual-interface/">Go C++ virtual interface</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p2p-dht/">p2p dht</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dht/">dht</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/media/">media</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/meeting/">meeting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mq/">mq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p2p/">p2p</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/programing-lanuage/">programing lanuage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl-tls/">ssl/tls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li></ul>
     </div>
   </div>
 
@@ -166,14 +310,14 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Go-C-virtual-interface/" style="font-size: 10px;">Go C++ virtual interface</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/p2p-dht/" style="font-size: 10px;">p2p dht</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/视频/" style="font-size: 10px;">视频</a>
+      <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/dht/" style="font-size: 10px;">dht</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/media/" style="font-size: 10px;">media</a> <a href="/tags/meeting/" style="font-size: 10px;">meeting</a> <a href="/tags/mq/" style="font-size: 10px;">mq</a> <a href="/tags/network/" style="font-size: 15px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/p2p/" style="font-size: 10px;">p2p</a> <a href="/tags/programing-lanuage/" style="font-size: 15px;">programing lanuage</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/ssl-tls/" style="font-size: 10px;">ssl/tls</a> <a href="/tags/tools/" style="font-size: 20px;">tools</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
     </div>
@@ -183,16 +327,16 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2021/03/04/message-queue/">message-queue</a>
+            <a href="/2021/03/04/message-queue/">Message queue</a>
           </li>
         
           <li>
-            <a href="/2018/05/11/gopher-2018/">gopher-2018</a>
+            <a href="/2018/05/11/gopher-2018/">Gopher 2018 shanghai memo</a>
           </li>
         
           <li>
@@ -200,7 +344,7 @@
           </li>
         
           <li>
-            <a href="/2018/05/03/private-addr/">IPV4私有地址</a>
+            <a href="/2018/05/03/private-addr/">IPv4 private address</a>
           </li>
         
           <li>

@@ -3,30 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go interface internal | supergui</title>
+  <title>Tag: programing lanuage | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="运行期的多态，是很多高级语言的很重要的特性。我们可以在运行期根据实际创建的对象，决定实际所要运行的函数。C++可以通过virtual member function实现运行期的多态，同样，在Go我们可以通过interface实现类似的机制。虽然C++的virtual和Go的interface本质上还是有很多区别，但是不妨碍我们深入探讨一下关于如何实现运行期多态。
-
-Note: 
-
-不去理解实现机制">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Go interface internal">
-<meta property="og:url" content="http://anticpp.github.io/2018/05/05/cpp-virtual-vs-go-interface/index.html">
+  <meta name="description" content="旗帜鲜明的站在C++的对立面">
+<meta property="og:type" content="website">
+<meta property="og:title" content="supergui">
+<meta property="og:url" content="http://anticpp.github.io/tags/programing-lanuage/index.html">
 <meta property="og:site_name" content="supergui">
-<meta property="og:description" content="运行期的多态，是很多高级语言的很重要的特性。我们可以在运行期根据实际创建的对象，决定实际所要运行的函数。C++可以通过virtual member function实现运行期的多态，同样，在Go我们可以通过interface实现类似的机制。虽然C++的virtual和Go的interface本质上还是有很多区别，但是不妨碍我们深入探讨一下关于如何实现运行期多态。
-
-Note: 
-
-不去理解实现机制">
-<meta property="og:updated_time" content="2021-03-04T07:03:31.759Z">
+<meta property="og:description" content="旗帜鲜明的站在C++的对立面">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go interface internal">
-<meta name="twitter:description" content="运行期的多态，是很多高级语言的很重要的特性。我们可以在运行期根据实际创建的对象，决定实际所要运行的函数。C++可以通过virtual member function实现运行期的多态，同样，在Go我们可以通过interface实现类似的机制。虽然C++的virtual和Go的interface本质上还是有很多区别，但是不妨碍我们深入探讨一下关于如何实现运行期多态。
-
-Note: 
-
-不去理解实现机制">
+<meta name="twitter:title" content="supergui">
+<meta name="twitter:description" content="旗帜鲜明的站在C++的对立面">
   
     <link rel="alternate" href="/atom.xml" title="supergui" type="application/atom+xml">
   
@@ -77,7 +64,9 @@ Note:
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-cpp-virtual-vs-go-interface" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main">
+  
+    <article id="post-cpp-virtual-vs-go-interface" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/05/cpp-virtual-vs-go-interface/" class="article-date">
   <time datetime="2018-05-04T19:01:17.000Z" itemprop="datePublished">2018-05-05</time>
@@ -90,8 +79,8 @@ Note:
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      Go interface internal
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/05/cpp-virtual-vs-go-interface/">Go interface internal</a>
     </h1>
   
 
@@ -150,28 +139,74 @@ Note:
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2018/05/11/gopher-2018/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
-      <div class="article-nav-title">
-        
-          Gopher 2018 shanghai memo
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/05/03/private-addr/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">IPv4 private address</div>
-    </a>
-  
-</nav>
+</article>
+
 
   
+    <article id="post-python-gevent-vs-go-coroutine" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/15/python-gevent-vs-go-coroutine/" class="article-date">
+  <time datetime="2016-03-15T02:26:39.000Z" itemprop="datePublished">2016-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/15/python-gevent-vs-go-coroutine/">python gevent VS go coroutine</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>针对python-threading、python-gevent和go-coroutine进行压测对比</p>
+<h2 id="压测环境"><a href="#压测环境" class="headerlink" title="压测环境"></a>压测环境</h2><ul>
+<li>压测机器是我的一台阿里云ECS机器</li>
+<li>CPU x86_64 单核</li>
+<li>内存 1G</li>
+<li>操作系统Linux iZ94mudtv23Z 2.6.32-431.23.3.el6.x86_64 Centos 6.5</li>
+<li>python 2.7</li>
+<li>go 1.5.1</li>
+</ul>
+<h2 id="压测模型"><a href="#压测模型" class="headerlink" title="压测模型"></a>压测模型</h2><ul>
+<li>测试不同并发上下文情况下，进程占用内存、CPU的情况</li>
+<li>并发数由1000逐步递增到50000</li>
+</ul>
+<h2 id="压测数据"><a href="#压测数据" class="headerlink" title="压测数据"></a>压测数据</h2><h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p><img src="/images/bench_vmem.png" alt="bench_vmem"></p>
+<h3 id="物理内存"><a href="#物理内存" class="headerlink" title="物理内存"></a>物理内存</h3><p><img src="/images/bench_mem.png" alt="bench_mem"></p>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p><img src="/images/bench_cpu.png" alt="bench_cpu"></p>
+<h2 id="压测结论"><a href="#压测结论" class="headerlink" title="压测结论"></a>压测结论</h2><ul>
+<li>总体性能比较go-coroutine &gt; python-gevent &gt; python-threading</li>
+<li>python-threading基本到15000并发数就上不去，可能是系统资源已经到了瓶颈</li>
+<li>python-gevent在并发数较小时表现不错，随着并发数上涨，内存和CPU的增长也较快</li>
+<li>python-gevent一开始就吃虚拟内存比较多</li>
+<li>go-coroutine性能表现出色，随着并发数上涨，内存和CPU占用都维持在比较平稳的水平</li>
+<li>总的来说不管是python-gevent还是go-coroutine，在用户态进行的context调度，比内核的threading消耗小很多</li>
+</ul>
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><p><a href="https://github.com/anticpp/coroutine_benchmark" target="_blank" rel="external">github代码</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2016/03/15/python-gevent-vs-go-coroutine/" data-id="ckluhuofx000c5sp3w6fdygjc" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programing-lanuage/">programing lanuage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
 </article>
+
+
+  
+
 
 </section>
         

@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 技术 | supergui</title>
+  <title>Tag: security | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="旗帜鲜明的站在C++的对立面">
 <meta property="og:type" content="website">
 <meta property="og:title" content="supergui">
-<meta property="og:url" content="http://anticpp.github.io/tags/技术/index.html">
+<meta property="og:url" content="http://anticpp.github.io/tags/security/index.html">
 <meta property="og:site_name" content="supergui">
 <meta property="og:description" content="旗帜鲜明的站在C++的对立面">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://anticpp.github.io"></form>
@@ -66,9 +66,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-SSL-TLS" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ssl-tls" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/11/23/SSL-TLS/" class="article-date">
+    <a href="/2016/11/23/ssl-tls/" class="article-date">
   <time datetime="2016-11-23T06:12:57.000Z" itemprop="datePublished">2016-11-23</time>
 </a>
     
@@ -80,7 +80,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/23/SSL-TLS/">SSL/TLS</a>
+      <a class="article-title" href="/2016/11/23/ssl-tls/">ssl/tls</a>
     </h1>
   
 
@@ -88,7 +88,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近在折腾Microservice的gRPC鉴权问题，顺带梳理了下ssl/xls的原理。<br>以前没有特别深究过里面的问题，最近大概都算理清楚了，这里Mark也下。</p>
+        <p>最近在折腾Microservice的gRPC鉴权问题，顺带梳理了下ssl/tls的原理。<br>以前没有特别深究过里面的问题，最近大概都算理清楚了，这里Mark也下。</p>
 <h1 id="1-ssl-tls"><a href="#1-ssl-tls" class="headerlink" title="1. ssl/tls"></a>1. ssl/tls</h1><p>ssl/tls是一套基于非对称加密的安全协议，实际上ssl和tls是两个版本，大多数情况下这两个名词一起被提到，可以理解为tls是ssl的升级版本。</p>
 <h1 id="2-https"><a href="#2-https" class="headerlink" title="2. https"></a>2. https</h1><p>其实https是泛指http over secure，是在http协议之上增加的安全协议。当然，也有人会把它理解为http over ssl或者http over tls。<br>一般我们提到https都会默认提到ssl/tls，是因为ssl/tls在当前是最成熟的应用到https上。</p>
 <h1 id="3-ssl-tls握手"><a href="#3-ssl-tls握手" class="headerlink" title="3. ssl/tls握手"></a>3. ssl/tls握手</h1><p>实际上https在安全机制上是做了两个事情，我们常常也会忽略。</p>
@@ -180,289 +180,10 @@ CRT: Certificate，证书
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://anticpp.github.io/2016/11/23/SSL-TLS/" data-id="cklu9c49600027rp3aebg6mj2" class="article-share-link">Share</a>
+      <a data-url="http://anticpp.github.io/2016/11/23/ssl-tls/" data-id="ckluhuog2000l5sp3tmuaatzp" class="article-share-link">Teilen</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="udp_about-udp包的问题" class="article article-type-udp_about" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/14/udp包的问题/" class="article-date">
-  <time datetime="2016-11-14T11:51:27.000Z" itemprop="datePublished">2016-11-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/14/udp包的问题/">udp包的问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近研究了一下udp相关的东西，做下笔记。<br>这里有相关的<a href="https://www.github.com/anticpp/experiments" target="_blank" rel="external">测试代码</a>。</p>
-<h1 id="udp包一般多少适合"><a href="#udp包一般多少适合" class="headerlink" title="udp包一般多少适合"></a>udp包一般多少适合</h1><p>协议层的限制，理论上我们可以发送接收65535(0xFFFF)大小的udp包。为了避免IP层分片，udp包在ethernet上一般不超过1472(1500-20-8)，1500为ethernet的链路MTU。<br>实际上很多应用（例如DNS）的udp包都不超过512，为什么呢？</p>
-<p>这是Stack Overflow上面的一句话<br>    The maximum safe UDP payload is 508 bytes. This is a packet size of 576, minus the maximum 60-byte IP header and the 8-byte UDP header. Any UDP payload this size or smaller is guaranteed to be deliverable over IP (though not guaranteed to be delivered). Anything larger is allowed to be outright dropped by any router for any reason.<br>按照字面理解的意思是，大于576的udp包在路由链路保证不了一定传输，难道是路由器的实现潜规则？</p>
-<ul>
-<li>更新At 2016-11-14<br>似乎RFC的IPV4标准里面有定义。</li>
-</ul>
-<p>RFC 791 excerpt:<br>…<br>All hosts must be prepared to accept datagrams of up to 576 octets ( whether they arrive whole or in fragments ). It is recommended that hosts only send datagrams larger than 576 octets if they have assurance that the destination is prepared to accept the larger datagrams.<br>The number 576 is selected to allow a reasonable sized data block to be transmitted in addition to the required header information. For example, this size allows a data block of 512 octets plus 64 header octets to fit in a datagram. The maximal internet header is 60 octets, and a typical internet header is 20 octets, allowing a margin for headers of higher level protocols.<br>…</p>
-<p>既然这样，另外一个问题来了，为什么TCP的MSS一般不受这个限制。<br>是因为TCP有做链路MTU探测，以及稳定的重传机制吗？</p>
-<h1 id="udp-socket缓冲区"><a href="#udp-socket缓冲区" class="headerlink" title="udp socket缓冲区"></a>udp socket缓冲区</h1><ol>
-<li><p>发送缓冲区<br>经常有一个误解是udp没有发送缓冲区，实际udp也有发送缓冲区。只不过udp并不是流协议，发送缓冲区只会缓存一个包，然后立刻就被拷贝到内核协议栈。<br>如果发送一个超过缓冲区大小的udp包，大多数的实现是直接丢弃。</p>
-</li>
-<li><p>接收缓冲区<br>接收缓冲区跟发送缓冲区有点不一样，所有的udp包会按照先后顺序缓存，应用层每次读会返回最早的包。实际上接收缓冲区就是FIFO队列。<br>如果接收缓冲区大小不够，大多数的实现是直接丢弃整个包。</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://anticpp.github.io/2016/11/14/udp包的问题/" data-id="cklu9c49r000k7rp3c4z4f5pq" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ffmpeg" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/31/ffmpeg/" class="article-date">
-  <time datetime="2016-03-31T13:05:06.000Z" itemprop="datePublished">2016-03-31</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/31/ffmpeg/">ffmpeg</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ffmpeg使用"><a href="#ffmpeg使用" class="headerlink" title="ffmpeg使用"></a>ffmpeg使用</h1><h1 id="发布rtmp流"><a href="#发布rtmp流" class="headerlink" title="发布rtmp流"></a>发布rtmp流</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -loglevel verbose -re -i test.flv -vcodec libx264  -vprofile baseline -acodec libmp3lame -ar 44100 -ac 1 -f flv &apos;rtmp://10.10.159.119:1935/app1/2&apos;</span><br></pre></td></tr></table></figure>
-<h1 id="ffmpeg安装"><a href="#ffmpeg安装" class="headerlink" title="ffmpeg安装"></a>ffmpeg安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --enable-libmp3lame --enable-libx264 --enable-libfdk-aac --enable-gpl --extra-cflags=-I/usr/local/include --extra-ldflags=-L/usr/local/lib --extra-libs=-ldl --enable-nonfree</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://anticpp.github.io/2016/03/31/ffmpeg/" data-id="cklu9c49500017rp3oevzh7j4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/视频/">视频</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python-gevent和go-coroutine对比" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/15/python-gevent和go-coroutine对比/" class="article-date">
-  <time datetime="2016-03-15T02:26:39.000Z" itemprop="datePublished">2016-03-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/15/python-gevent和go-coroutine对比/">python-gevent和go-coroutine对比</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>针对python-threading、python-gevent和go-coroutine进行压测对比</p>
-<h2 id="压测环境"><a href="#压测环境" class="headerlink" title="压测环境"></a>压测环境</h2><ul>
-<li>压测机器是我的一台阿里云ECS机器</li>
-<li>CPU x86_64 单核</li>
-<li>内存 1G</li>
-<li>操作系统Linux iZ94mudtv23Z 2.6.32-431.23.3.el6.x86_64 Centos 6.5</li>
-<li>python 2.7</li>
-<li>go 1.5.1</li>
-</ul>
-<h2 id="压测模型"><a href="#压测模型" class="headerlink" title="压测模型"></a>压测模型</h2><ul>
-<li>测试不同并发上下文情况下，进程占用内存、CPU的情况</li>
-<li>并发数由1000逐步递增到50000</li>
-</ul>
-<h2 id="压测数据"><a href="#压测数据" class="headerlink" title="压测数据"></a>压测数据</h2><h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p><img src="/images/bench_vmem.png" alt="bench_vmem"></p>
-<h3 id="物理内存"><a href="#物理内存" class="headerlink" title="物理内存"></a>物理内存</h3><p><img src="/images/bench_mem.png" alt="bench_mem"></p>
-<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p><img src="/images/bench_cpu.png" alt="bench_cpu"></p>
-<h2 id="压测结论"><a href="#压测结论" class="headerlink" title="压测结论"></a>压测结论</h2><ul>
-<li>总体性能比较go-coroutine &gt; python-gevent &gt; python-threading</li>
-<li>python-threading基本到15000并发数就上不去，可能是系统资源已经到了瓶颈</li>
-<li>python-gevent在并发数较小时表现不错，随着并发数上涨，内存和CPU的增长也较快</li>
-<li>python-gevent一开始就吃虚拟内存比较多</li>
-<li>go-coroutine性能表现出色，随着并发数上涨，内存和CPU占用都维持在比较平稳的水平</li>
-<li>总的来说不管是python-gevent还是go-coroutine，在用户态进行的context调度，比内核的threading消耗小很多</li>
-</ul>
-<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><p><a href="https://github.com/anticpp/coroutine_benchmark" target="_blank" rel="external">github代码</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://anticpp.github.io/2016/03/15/python-gevent和go-coroutine对比/" data-id="cklu9c49n000e7rp3gkwc701v" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo安装" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/29/hexo安装/" class="article-date">
-  <time datetime="2016-02-29T11:58:22.000Z" itemprop="datePublished">2016-02-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/29/hexo安装/">hexo安装</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>折腾了下hexo的环境，用来做自己的markdown博客还是相当不错，还支持github部署。这里讲一下怎么安装。</p>
-<p><a href="https://hexo.io/" target="_blank" rel="external">hexo官网</a><br><a href="https://github.com/hexojs/hexo" target="_blank" rel="external">hexo github地址</a></p>
-<h2 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h2><p>hexo是基于nodejs的插件实现，需要先安装nodejs<br>安装办法参考<a href="http://nodejs.cn/" target="_blank" rel="external">nodejs官网</a>。</p>
-<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo
-</code></pre><h2 id="初始化blog"><a href="#初始化blog" class="headerlink" title="初始化blog"></a>初始化blog</h2><p>例如我的博客目录在~/blog/，则cd到~目录执行初始化，如下</p>
-<pre><code>cd ~
-hexo init blog
-cd blog
-npm install
-</code></pre><h2 id="启动hexo-server"><a href="#启动hexo-server" class="headerlink" title="启动hexo-server"></a>启动hexo-server</h2><pre><code>cd ~/blog/
-hexo server
-</code></pre><p>hexo会启动一个监听4000端口的http服务器，输出信息</p>
-<pre><code>INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
-</code></pre><h2 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h2><pre><code>hexo generate
-</code></pre><h2 id="本地查看"><a href="#本地查看" class="headerlink" title="本地查看"></a>本地查看</h2><p>在浏览器输入地址<code>http://localhost:4000/</code>，即可看到你的博客页面。</p>
-<h2 id="创建文章"><a href="#创建文章" class="headerlink" title="创建文章"></a>创建文章</h2><pre><code>hexo new &quot;page1&quot;
-</code></pre><h2 id="github部署"><a href="#github部署" class="headerlink" title="github部署"></a>github部署</h2><p><a href="https://pages.github.com/" target="_blank" rel="external">github page</a>是github提供的公开网页托管服务。可以把网页push到github仓库，然后可以通过公开域名访问。</p>
-<p>hexo支持进行github page部署。具体步骤如下</p>
-<ol>
-<li><p>在你的github上面创建仓库，名字为’username’.github.io。<br> ‘username’为你的github账号。</p>
-</li>
-<li><p>配置_config.xml<br>例如我的github账号为anticpp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:anticpp/anticpp.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署<br> hexo deploy</p>
-</li>
-</ol>
-<p><code>note:</code><br><code>如果出现错误信息&#39;ERROR Deployer not found: git&#39;，尝试安装以下组件</code></p>
-<pre><code>npm install hexo-deployer-git --save
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://anticpp.github.io/2016/02/29/hexo安装/" data-id="cklu9c49j00097rp3yan0jbkz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/markdown/">markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ssh信任关系" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/29/ssh信任关系/" class="article-date">
-  <time datetime="2016-02-29T11:26:15.000Z" itemprop="datePublished">2016-02-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/29/ssh信任关系/">ssh信任关系</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>自动ssh登录，我写了一个autossh的工具。<br>有兴趣的朋友可以试试<a href="https://github.com/anticpp/autossh" target="_blank" rel="external">autossh</a></p>
-</blockquote>
-<blockquote>
-<p>回到正题，A要ssh登陆到B，不想输入密码。可以在B建立一个对A的ssh信任关系即可。<br>ssh的信任关系是通过rsa实现，具体的操作步骤如下:</p>
-</blockquote>
-<h2 id="A机器生成rsa-key"><a href="#A机器生成rsa-key" class="headerlink" title="A机器生成rsa key"></a>A机器生成rsa key</h2><ul>
-<li>进入~/.ssh/</li>
-<li>运行ssh-keygen，所有的提示都默认回车即可</li>
-<li>拷贝公钥，cat id_rsa.pub</li>
-</ul>
-<h2 id="B机器添加公钥"><a href="#B机器添加公钥" class="headerlink" title="B机器添加公钥"></a>B机器添加公钥</h2><ul>
-<li>进入~/.ssh/</li>
-<li>把A生成的公钥，添加到authorized_keys</li>
-</ul>
-<h2 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h2><ul>
-<li>从A登陆B机器，无需密码</li>
-</ul>
-<p><code>注意:</code><br><code>非root账号的ssh信任关系一直都还不行，网上很多资料都说是文件权限问题，试了下都不行。</code><br><code>所以暂时未解，后面找到原因再跟进到文档。</code></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://anticpp.github.io/2016/02/29/ssh信任关系/" data-id="cklu9c49s000n7rp3q7g43h3s" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/security/">security</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssl-tls/">ssl/tls</a></li></ul>
 
     </footer>
   </div>
@@ -484,7 +205,7 @@ hexo server
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Go-C-virtual-interface/">Go C++ virtual interface</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p2p-dht/">p2p dht</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dht/">dht</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/media/">media</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/meeting/">meeting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mq/">mq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p2p/">p2p</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/programing-lanuage/">programing lanuage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl-tls/">ssl/tls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li></ul>
     </div>
   </div>
 
@@ -494,14 +215,14 @@ hexo server
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Go-C-virtual-interface/" style="font-size: 10px;">Go C++ virtual interface</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/p2p-dht/" style="font-size: 10px;">p2p dht</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/视频/" style="font-size: 10px;">视频</a>
+      <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/dht/" style="font-size: 10px;">dht</a> <a href="/tags/go/" style="font-size: 20px;">go</a> <a href="/tags/media/" style="font-size: 10px;">media</a> <a href="/tags/meeting/" style="font-size: 10px;">meeting</a> <a href="/tags/mq/" style="font-size: 10px;">mq</a> <a href="/tags/network/" style="font-size: 15px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/p2p/" style="font-size: 10px;">p2p</a> <a href="/tags/programing-lanuage/" style="font-size: 15px;">programing lanuage</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/ssl-tls/" style="font-size: 10px;">ssl/tls</a> <a href="/tags/tools/" style="font-size: 20px;">tools</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li></ul>
     </div>
@@ -511,16 +232,16 @@ hexo server
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2021/03/04/message-queue/">message-queue</a>
+            <a href="/2021/03/04/message-queue/">Message queue</a>
           </li>
         
           <li>
-            <a href="/2018/05/11/gopher-2018/">gopher-2018</a>
+            <a href="/2018/05/11/gopher-2018/">Gopher 2018 shanghai memo</a>
           </li>
         
           <li>
@@ -528,7 +249,7 @@ hexo server
           </li>
         
           <li>
-            <a href="/2018/05/03/private-addr/">IPV4私有地址</a>
+            <a href="/2018/05/03/private-addr/">IPv4 private address</a>
           </li>
         
           <li>
