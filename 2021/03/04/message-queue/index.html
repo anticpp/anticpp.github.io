@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2018/4 | supergui</title>
+  <title>message-queue | supergui</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="旗帜鲜明的站在C++的对立面">
-<meta property="og:type" content="website">
-<meta property="og:title" content="supergui">
-<meta property="og:url" content="http://anticpp.github.io/archives/2018/04/index.html">
+  <meta name="description" content="不同的消息队列的消息语义
+nsq12345678910                               Consumer Group                                 --------topic --        ------------------- C0  |       |       \|/               |      |">
+<meta property="og:type" content="article">
+<meta property="og:title" content="message-queue">
+<meta property="og:url" content="http://anticpp.github.io/2021/03/04/message-queue/index.html">
 <meta property="og:site_name" content="supergui">
-<meta property="og:description" content="旗帜鲜明的站在C++的对立面">
+<meta property="og:description" content="不同的消息队列的消息语义
+nsq12345678910                               Consumer Group                                 --------topic --        ------------------- C0  |       |       \|/               |      |">
+<meta property="og:updated_time" content="2021-03-04T02:36:12.889Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="supergui">
-<meta name="twitter:description" content="旗帜鲜明的站在C++的对立面">
+<meta name="twitter:title" content="message-queue">
+<meta name="twitter:description" content="不同的消息队列的消息语义
+nsq12345678910                               Consumer Group                                 --------topic --        ------------------- C0  |       |       \|/               |      |">
   
     <link rel="alternate" href="/atom.xml" title="supergui" type="application/atom+xml">
   
@@ -64,40 +68,69 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/04/17/dht/" class="archive-article-date">
-  <time datetime="2018-04-17T13:03:24.000Z" itemprop="datePublished">Apr 17</time>
+        <section id="main"><article id="post-message-queue" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/04/message-queue/" class="article-date">
+  <time datetime="2021-03-04T02:15:47.000Z" itemprop="datePublished">2021-03-04</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/17/dht/">DHT</a>
+    <h1 class="article-title" itemprop="name">
+      message-queue
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>不同的消息队列的消息语义</p>
+<h2 id="nsq"><a href="#nsq" class="headerlink" title="nsq"></a>nsq</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">                               Consumer Group</span><br><span class="line">                                 --------</span><br><span class="line">topic --        ------------------- C0  |</span><br><span class="line">       |       \|/               |      |</span><br><span class="line">       --&gt; channel0 &lt;-------------- C1  |</span><br><span class="line">       |       /|\               |      |</span><br><span class="line">       |        ------------------- C2  |</span><br><span class="line">       --&gt; channel1              |      |</span><br><span class="line">       |                         --------</span><br><span class="line">       --&gt; channel2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>分发</li>
+</ul>
+<p>每一个topic会分发到多个channel，每个channel是独立的队列，不同的Consumer Group可以消费不同的channel，互相不影响。同一个channel的消息，只会分发给Consumer Group的一个实例。</p>
+<ul>
+<li>流控</li>
+</ul>
+<p>每一个消费者实例，通过RDY告知nsq自己的处理窗口大小，消费者通过RDY来控制消息的处理吞吐。</p>
+<ul>
+<li>并发</li>
+</ul>
+<p>channel对同一个消费者实例，会并发通知多个消息，取决于消费者实例的RDY。channel对于多个消费者实例，也会并行通知。也就是如果想提高消费的吞吐，可以提高每一个消费者实例的RDY大小，也可以增加消费者实例。</p>
+<ul>
+<li>有序性</li>
+</ul>
+<p>由于channel的通知并行性，以及消息的REQUEUE语义，消息的有序性不保证</p>
+<h2 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h2><h2 id="pulsar"><a href="#pulsar" class="headerlink" title="pulsar"></a>pulsar</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://anticpp.github.io/2021/03/04/message-queue/" data-id="cklu9c49o000f7rp3ftlnk7x4" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/05/11/gopher-2018/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">gopher-2018</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
